@@ -31,12 +31,52 @@ all_red: mov al, 09h
          mov cx,5
          call time
          
-         ret 
+         ret  
          
+crossing1: mov al, 12h
+           out 60h, al
+           
+           mov cx, 2
+           call time
+           
+           mov al, 09h
+           out 60h, al
+           
+           mov cx, 3
+           call time  
+           
+           ret
+           
+           
+           
+crossing2: mov al, 12h,
+           out 62h, al
+           
+           mov cx, 2
+           call time  
+           
+           mov al, 09h
+           out 62h, al
+           
+           mov cx, 3
+           call time
+           
+           ret
+            
+           
          
-intrpt:
-call all_red
+emergency:
+call all_red 
 
+iret 
+
+cross:
+call crossing1
+
+iret
+
+cross1:
+call crossing2
 iret
  
 start:
@@ -63,7 +103,7 @@ mov al, 03h
 out 82h, al 
 
 ;interrupt vector table initialization
-lea ax, intrpt
+lea ax, emergency
 mov di, 00c0h
 stosw
 
